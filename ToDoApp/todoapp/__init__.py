@@ -18,7 +18,9 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
 
     from todoapp.main.routes import main
+    from todoapp.users.routes import users
 
     app.register_blueprint(main)
+    app.register_blueprint(users)
     
     return app
