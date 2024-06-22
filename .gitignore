@@ -1,2 +1,6 @@
 ToDoApp/todoapp/__pycache__
 ToDoApp/todoapp/main/__pycache__
+ToDoApp/todoapp/users/__pycache__
+
+ToDoApp/todoapp/database.py
+ToDoApp/todoapp/todoapp.db
