@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
@@ -6,6 +7,8 @@ from todoapp.config import Config
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -16,6 +19,7 @@ def create_app(config_class=Config):
         db.create_all()
 
     bcrypt.init_app(app)
+    login_manager.init_app(app)
 
     from todoapp.main.routes import main
     from todoapp.users.routes import users
