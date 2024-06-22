@@ -15,7 +15,12 @@ def create_app(config_class=Config):
     app.config.from_object(Config)
     
     db.init_app(app)
+    
     with app.app_context():
+        db.create_all()
+    
+    @app.before_first_request
+    def create_tables():
         db.create_all()
 
     bcrypt.init_app(app)
@@ -23,8 +28,10 @@ def create_app(config_class=Config):
 
     from todoapp.main.routes import main
     from todoapp.users.routes import users
+    from todoapp.tasks.routes import tasks
 
     app.register_blueprint(main)
     app.register_blueprint(users)
+    app.register_blueprint(tasks)
     
     return app
