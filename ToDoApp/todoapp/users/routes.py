@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from todoapp import db, bcrypt
-from todoapp.users.forms import RegistrationForm, LoginForm
+from todoapp.users.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from todoapp.models import User
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 users = Blueprint('users', __name__)
 
@@ -39,3 +39,19 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("main.home"))
+
+@users.route("/account", methods=['GET','POST'])
+@login_required
+def account():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Account successfully updated!', 'success')
+        return redirect(url_for('users.account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+
+    return render_template('account.html', title='My Account', form=form)
