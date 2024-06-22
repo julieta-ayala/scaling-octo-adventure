@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from todoapp import db, bcrypt
 from todoapp.users.forms import RegistrationForm, LoginForm
 from todoapp.models import User
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user
 
 users = Blueprint('users', __name__)
 
@@ -34,3 +34,8 @@ def login():
         else:
             flash('Login unsuccessful. Check email and password.','danger')
     return render_template('login.html', title='Login', form=form)
+
+@users.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("main.home"))
