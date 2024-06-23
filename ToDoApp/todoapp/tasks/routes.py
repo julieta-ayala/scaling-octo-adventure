@@ -23,6 +23,4 @@ def user_tasks(username):
     print("Username: {}".format(username))
     user = User.query.filter_by(username=username).first_or_404()
     tasks = Task.query.filter_by(author=user).order_by(Task.date_posted.desc())
-    for t in tasks:
-        print("Task ID: {} Title: {} Description: {} Date: {} ".format(t.id, t.title, t.description, t.date_posted))
     return render_template('user_tasks.html', tasks=tasks, user=user)
