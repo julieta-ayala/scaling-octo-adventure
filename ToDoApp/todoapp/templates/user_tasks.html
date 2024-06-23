@@ -1,0 +1,13 @@
+{% extends "layout.html"%}
+{% block content %}
+<h1 class="mb-3">Tasks by {{ user.username }}</h1>
+{% for task in tasks %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h5>{{ task.title }}</h5>
+            <small class="text-muted">Created on: {{ task.date_posted.strftime('%Y-%m-%d') }}</small>
+            <p class="article-content">{{ task.description }}</p>
+        </div>
+    </article>
+{% endfor %}
+{% endblock content %}
